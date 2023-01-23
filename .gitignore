@@ -1,2 +1,5 @@
 /node_modules
 /note.txt
+
+.DS_Store
+public/.DS_Store
