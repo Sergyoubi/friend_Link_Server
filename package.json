@@ -3,6 +3,9 @@
     "start": "node server.js"
   },
   "name": "server",
+  "engines": {
+    "node": "14.x"
+  },
   "version": "1.0.0",
   "main": "server.js",
   "type": "module",
