@@ -84,21 +84,23 @@ const connectDB = async () => {
     try {
       const conn = await mongoose.connect(process.env.MONGO_URL_DEV);
       console.log(
-        `MongoDB Connected to MongoDB Compass: ${conn.connection.host}`
+        `Local Server connected to MongoDB Compass: ${conn.connection.host}`
       );
     } catch (error) {
       console.log(
-        `Error! Server unable to connect to MongoDB Compass: ${error.message}`
+        `Error! Local Server unable to connect to MongoDB Compass: ${error.message}`
       );
       process.exit(1);
     }
   } else {
     try {
       const conn = await mongoose.connect(process.env.MONGO_URL_PROD);
-      console.log(`MongoDB Connected MongoDB Atlas: ${conn.connection.host}`);
+      console.log(
+        `Production Server Connected MongoDB Atlas: ${conn.connection.host}`
+      );
     } catch (error) {
       console.log(
-        `Error! Server unable to connect to MongoDB Atlas: ${error.message}`
+        `Error! Production Server unable to connect to MongoDB Atlas: ${error.message}`
       );
       process.exit(1);
     }
