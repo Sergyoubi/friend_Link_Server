@@ -42,11 +42,11 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-/* mongoDB setup */
+/* mongoDB setup LOCAL */
 /*
 if (process.env.NODE_ENV === "dev") {
   mongoose
-    .connect(process.env.MONGO_URL_DEV, {
+    .connect(process.env.MONGO_URI_DEV, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
@@ -60,56 +60,28 @@ if (process.env.NODE_ENV === "dev") {
     .catch((error) =>
       console.log(`Server did not connect to MongoDB Compass: ${error.message}`)
     );
-} else {
-  mongoose
-    .connect(process.env.MONGO_URL_PROD, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
-    .then(() => {
-      app.listen(PORT, () =>
-        console.log(
-          `Successfully connected to MongoDB Atlas! Server Running On Port: ${PORT}`
-        )
-      );
-    })
-    .catch((error) =>
-      console.log(`Server unable to connect to MongoDB Atlas: ${error.message}`)
-    );
 }
 */
 
+/* mongoDB Setup PRODUCTION */
 const connectDB = async () => {
-  if (process.env.NODE_ENV === "dev") {
-    try {
-      const conn = await mongoose.connect(process.env.MONGO_URI_DEV);
-      console.log(
-        `Local Server connected to MongoDB Compass: ${conn.connection.host}`
-      );
-    } catch (error) {
-      console.log(
-        `Error! Local Server unable to connect to MongoDB Compass: ${error.message}`
-      );
-      process.exit(1);
-    }
-  } else {
-    try {
-      const conn = await mongoose.connect(process.env.MONGO_URI_PROD);
-      console.log(
-        `Production Server Connected MongoDB Atlas: ${conn.connection.host}`
-      );
-    } catch (error) {
-      console.log(
-        `Error! Production Server unable to connect to MongoDB Atlas: ${error.message}`
-      );
-      process.exit(1);
-    }
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI_PROD);
+
+    console.log(
+      `Production Server Connected MongoDB Atlas: ${conn.connection.host}`
+    );
+  } catch (error) {
+    console.log(
+      `Error! Production Server unable to connect to MongoDB Atlas: ${error.message}`
+    );
+    process.exit(1);
   }
 };
 
 connectDB().then(() => {
   app.listen(PORT, () => {
-    console.log(`Server listening on PORT:${PORT} for requests`);
+    console.log(`Server listening on PORT ${PORT} for requests`);
   });
 });
 
