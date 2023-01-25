@@ -43,6 +43,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 /* mongoDB setup */
+/*
 if (process.env.NODE_ENV === "dev") {
   mongoose
     .connect(process.env.MONGO_URL_DEV, {
@@ -73,9 +74,42 @@ if (process.env.NODE_ENV === "dev") {
       );
     })
     .catch((error) =>
-      console.log(`Server did not connect to MongoDB Atlas: ${error.message}`)
+      console.log(`Server unable to connect to MongoDB Atlas: ${error.message}`)
     );
 }
+*/
+
+const connectDB = async () => {
+  if (process.env.NODE_ENV === "dev") {
+    try {
+      const conn = await mongoose.connect(process.env.MONGO_URL_DEV);
+      console.log(
+        `MongoDB Connected to MongoDB Compass: ${conn.connection.host}`
+      );
+    } catch (error) {
+      console.log(
+        `Server unable to connect to MongoDB Compass: ${error.message}`
+      );
+      process.exit(1);
+    }
+  } else {
+    try {
+      const conn = await mongoose.connect(process.env.MONGO_URL_PROD);
+      console.log(`MongoDB Connected MongoDB Atlas: ${conn.connection.host}`);
+    } catch (error) {
+      console.log(
+        `Server unable to connect to MongoDB Atlas: ${error.message}`
+      );
+      process.exit(1);
+    }
+  }
+};
+
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server listening on PORT:${PORT} for requests`);
+  });
+});
 
 /* routes with file, this route is not inside routes/auth bcz we have to use upload function */
 app.post("/auth/register", upload.single("picture"), register);
