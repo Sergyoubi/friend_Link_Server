@@ -88,7 +88,7 @@ const connectDB = async () => {
       );
     } catch (error) {
       console.log(
-        `Server unable to connect to MongoDB Compass: ${error.message}`
+        `Error! Server unable to connect to MongoDB Compass: ${error.message}`
       );
       process.exit(1);
     }
@@ -98,7 +98,7 @@ const connectDB = async () => {
       console.log(`MongoDB Connected MongoDB Atlas: ${conn.connection.host}`);
     } catch (error) {
       console.log(
-        `Server unable to connect to MongoDB Atlas: ${error.message}`
+        `Error! Server unable to connect to MongoDB Atlas: ${error.message}`
       );
       process.exit(1);
     }
