@@ -82,7 +82,7 @@ if (process.env.NODE_ENV === "dev") {
 const connectDB = async () => {
   if (process.env.NODE_ENV === "dev") {
     try {
-      const conn = await mongoose.connect(process.env.MONGO_URL_DEV);
+      const conn = await mongoose.connect(process.env.MONGO_URI_DEV);
       console.log(
         `Local Server connected to MongoDB Compass: ${conn.connection.host}`
       );
@@ -94,7 +94,7 @@ const connectDB = async () => {
     }
   } else {
     try {
-      const conn = await mongoose.connect(process.env.MONGO_URL_PROD);
+      const conn = await mongoose.connect(process.env.MONGO_URI_PROD);
       console.log(
         `Production Server Connected MongoDB Atlas: ${conn.connection.host}`
       );
