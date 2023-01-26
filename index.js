@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
-const PORT = process.env.PORT || 6001;
+const PORT = process.env.PORT;
 
 /* file storage */
 const storage = multer.diskStorage({
@@ -44,23 +44,25 @@ const upload = multer({ storage });
 
 /* mongoDB setup LOCAL */
 /*
-if (process.env.NODE_ENV === "dev") {
-  mongoose
-    .connect(process.env.MONGO_URI_DEV, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
-    .then(() => {
-      app.listen(PORT, () =>
-        console.log(
-          `Successfully connected to MongoDB Compass! Server Running On Port: ${PORT}`
-        )
-      );
-    })
-    .catch((error) =>
-      console.log(`Server did not connect to MongoDB Compass: ${error.message}`)
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI_DEV);
+
+    console.log(
+      `Local Server Connected MongoDB Compass: ${conn.connection.host}`
     );
-}
+  } catch (error) {
+    console.log(
+      `Error! Local Server unable to connect to MongoDB Compass: ${error.message}`
+    );
+    process.exit(1);
+  }
+};
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Local Server listening on PORT ${PORT} for requests`);
+  });
+});
 */
 
 /* mongoDB Setup PRODUCTION */
@@ -78,10 +80,9 @@ const connectDB = async () => {
     process.exit(1);
   }
 };
-
 connectDB().then(() => {
   app.listen(PORT, () => {
-    console.log(`Server listening on PORT ${PORT} for requests`);
+    console.log(`Production Server listening on PORT ${PORT} for requests`);
   });
 });
 
