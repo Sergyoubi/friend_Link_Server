@@ -42,30 +42,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-/* mongoDB setup LOCAL */
-/*
-const connectDB = async () => {
-  try {
-    const conn = await mongoose.connect(process.env.MONGO_URI_DEV);
-
-    console.log(
-      `Local Server Connected MongoDB Compass: ${conn.connection.host}`
-    );
-  } catch (error) {
-    console.log(
-      `Error! Local Server unable to connect to MongoDB Compass: ${error.message}`
-    );
-    process.exit(1);
-  }
-};
-connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Local Server listening on PORT ${PORT} for requests`);
-  });
-});
-*/
-
-/* mongoDB Setup PRODUCTION */
+/* mongoDB Setup for Prod */
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(process.env.MONGO_URI_PROD);
