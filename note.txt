@@ -1,1 +1,2 @@
 In package.json, add "type": "module" to allow us to use "import" statement (ES6) instead of "require" statement
+In MongoDB Atlas, in Network access section, add "0.0.0.0/0" as an IP address in order for hosting services to access the Database.

@@ -42,6 +42,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
+<<<<<<< HEAD
 /* mongoDB setup LOCAL */
 const connectDB = async () => {
   try {
@@ -53,13 +54,30 @@ const connectDB = async () => {
   } catch (error) {
     console.log(
       `Error! Local Server unable to connect to MongoDB Compass: ${error.message}`
+=======
+/* mongoDB Setup for Prod */
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI_PROD);
+
+    console.log(
+      `Production Server Connected MongoDB Atlas: ${conn.connection.host}`
+    );
+  } catch (error) {
+    console.log(
+      `Error! Production Server unable to connect to MongoDB Atlas: ${error.message}`
+>>>>>>> prod
     );
     process.exit(1);
   }
 };
 connectDB().then(() => {
   app.listen(PORT, () => {
+<<<<<<< HEAD
     console.log(`Local Server listening on PORT ${PORT} for requests`);
+=======
+    console.log(`Production Server listening on PORT ${PORT} for requests`);
+>>>>>>> prod
   });
 });
 
