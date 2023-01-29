@@ -48,7 +48,7 @@ const connectDB = async () => {
     const conn = await mongoose.connect(process.env.MONGO_URI_PROD);
 
     console.log(
-      `Production Server Connected MongoDB Atlas: ${conn.connection.host}`
+      `Production Server Connected to MongoDB Atlas: ${conn.connection.host}`
     );
   } catch (error) {
     console.log(
